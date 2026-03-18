@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3조 팀 소개 페이지</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://ff.kiro.re.kr/fonts/GmarketSans/font.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-color: #f4f7f9; 
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+            --transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            --font-title: 'GmarketSans', sans-serif;
+            --font-body: 'Pretendard Variable', 'Pretendard', sans-serif;
+            --font-soft: 'Nanum Myeongjo', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 24px;
+            background: radial-gradient(circle at 50% 10%, #ffffff 0%, #f0f4f8 40%, #e2e8f0 100%);
+        }
+
+        .hero h1 { 
+            font-family: var(--font-title); 
+            font-size: clamp(2.2rem, 8vw, 4rem); 
+            font-weight: 700; 
+            margin-bottom: 20px; 
+            color: var(--text-main); 
+            letter-spacing: -0.04em; 
+            text-shadow: 1px 1px 0px #fff, 2px 2px 0px #cbd5e1, 3px 3px 10px rgba(0,0,0,0.1); 
+        }
+        
+        .hero p { 
+            font-family: var(--font-soft); 
+            font-size: clamp(1rem, 4vw, 1.25rem); 
+            color: #57606f; 
+            max-width: 750px; 
+            margin-bottom: 40px; 
+            font-weight: 700; 
+            line-height: 1.8; 
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cta-button {
+            padding: 16px 32px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .cta-button:hover { 
+            transform: translateY(-3px); 
+            background-color: var(--primary-hover);
+        }
+
+        /* Team Section - 격자 구조 복구 */
+        .content-section { padding: 80px 24px; max-width: 1000px; margin: 0 auto; }
+        .section-header { margin-bottom: 50px; text-align: center; }
+        .section-header h2 { font-family: var(--font-title); font-size: 2.2rem; font-weight: 700; color: var(--text-main); }
+
+        .team-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 24px; 
+            justify-content: center;
+        }
+
+        @media (min-width: 900px) {
+            .team-grid { grid-template-columns: repeat(6, 1fr); }
+            /* 상단 3명 */
+            .member-card:nth-child(1), .member-card:nth-child(2), .member-card:nth-child(3) { grid-column: span 2; }
+            /* 하단 2명 */
+            .member-card:nth-child(4) { grid-column: 2 / span 2; }
+            .member-card:nth-child(5) { grid-column: 4 / span 2; }
+        }
+
+        .member-card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 36px 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #eef2f6;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 250px;
+        }
+        .member-card:hover { transform: translateY(-8px); border-color: var(--primary-color); }
+
+        .avatar-wrapper {
+            width: 80px; height: 80px; margin: 0 auto 16px;
+            background: #f1f5f9; border-radius: 24px;
+            display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
+            transition: var(--transition);
+        }
+        .member-card:hover .avatar-wrapper { background: #e0e7ff; transform: scale(1.1); }
+
+        .member-name { font-family: var(--font-title); font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .member-appeal { font-size: 0.9rem; color: var(--text-sub); font-weight: 500; line-height: 1.5; padding: 0 10px; }
+
+        /*팀원 사진첩 Slider */
+        .group-photo-section {
+            padding: 100px 24px;
+            background-color: var(--bg-color);
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .slider-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 32px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 550px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .slide img {
+            max-width: 92%;
+            max-height: 92%;
+            width: auto;
+            height: auto;
+            object-fit: contain; 
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 54px;
+            height: 54px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            color: #1e293b;
+            transition: var(--transition);
+        }
+        .slider-btn:hover { background: rgba(255, 255, 255, 0.8); transform: translateY(-50%) scale(1.1); }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+        /* Modal Settings */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white; width: 100%; max-width: 420px; border-radius: 40px;
+            padding: 40px 24px 30px; text-align: center; position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(40px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .close-btn {
+            position: absolute; top: 20px; right: 20px; border: none; background: #f1f5f9;
+            width: 44px; height: 44px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; color: var(--text-sub);
+        }
+
+        .modal-photo-container {
+            width: 220px; height: 220px; margin: 0 auto 24px;
+            border-radius: 40px; overflow: hidden; background: #f1f5f9;
+            border: 6px solid #f8fafc;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .modal-photo-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .info-list { margin-top: 24px; text-align: left; background: #f8fafc; border-radius: 24px; padding: 20px; }
+        .info-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .info-row:last-child { border: none; }
+        .label { color: var(--text-sub); font-size: 0.9rem; font-weight: 500; }
+        .val { font-weight: 700; color: var(--text-main); font-size: 1rem; }
+
+        /* Viewer Mode (사진첩 클릭 시) */
+        .viewer-mode .info-list { display: none; }
+        .viewer-mode .modal-photo-container { width: 300px; height: 300px; }
+
+        .top-btn {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background-color: var(--primary-color); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            border: none; opacity: 0; visibility: hidden; z-index: 999; transition: var(--transition);
+        }
+        .top-btn.visible { opacity: 1; visibility: visible; }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.2rem; }
+            .slide { height: 400px; }
+            .viewer-mode .modal-photo-container { width: 100%; height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <h1>3조 팀원을 소개합니다</h1>
+        <p>바이오메디컬공학의 내일을 그리는 아름다운 도약,<br>창의와 열정으로 뭉친 우리들입니다.</p>
+        <div class="cta-group">
+            <button class="cta-button" onclick="document.getElementById('team').scrollIntoView({behavior:'smooth'})">프로필 보기</button>
+            <button class="cta-button" onclick="document.getElementById('group-photo').scrollIntoView({behavior:'smooth'})">사진첩 보기</button>
+        </div>
+    </section>
+
+    <section class="content-section" id="team">
+        <div class="section-header">
+            <h2>팀원 프로필</h2>
+        </div>
+        <div class="team-grid" id="grid"></div>
+    </section>
+
+    <section class="group-photo-section" id="group-photo">
+        <div class="section-header">
+            <h2>팀원 사진첩</h2>
+        </div>
+        <div class="slider-container">
+            <button class="slider-btn prev-btn" id="prevSlide">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="slider-wrapper" id="sliderWrapper"></div>
+            <button class="slider-btn next-btn" id="nextSlide">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+    </section>
+
+    <button class="top-btn" id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content" id="modal-card">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <div class="modal-photo-container">
+                <img id="m-photo" src="" alt="팀원 사진">
+            </div>
+            <h2 id="m-name" style="font-family: var(--font-title); margin-bottom: 4px; font-size: 1.6rem;"></h2>
+            <div class="info-list" id="m-info-list">
+                <div class="info-row"><span class="label">이름</span><span class="val" id="i-name"></span></div>
+                <div class="info-row"><span class="label">학번</span><span class="val" id="i-id"></span></div>
+                <div class="info-row"><span class="label">나이</span><span class="val" id="i-age"></span></div>
+                <div class="info-row"><span class="label">소속</span><span class="val" id="i-dept"></span></div>
+                <div class="info-row"><span class="label">MBTI</span><span class="val" id="i-mbti"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 고정 이미지 설정 (일러스트 느낌의 이미지들)
+        const team = [
+            { 
+                id: 1, name: '박재현', emoji: '🫅', 
+                // 요청하신 구글 드라이브 일러스트 이미지 적용
+                photo: 'https://lh3.googleusercontent.com/d/1cuOrdmrPFycruKS9H3Glid25i67ugD0e', 
+                studentId: '26학번', age: 20, dept: '바이오메디컬공학부', mbti: 'ISTJ', 
+                appeal: '팀을 활기차게 이끌며 즐거운 에너지를 전하는 분위기 메이커'
+            },
+            { 
+                id: 2, name: '박예성', emoji: '👦', 
+                photo: 'https://img.freepik.com/free-vector/flat-style-young-man-avatar-collection_23-2148906325.jpg',
+                studentId: '25학번', age: 22, dept: '바이오메디컬공학부', mbti: 'ISTP', 
+                appeal: '성실함과 꼼꼼함으로 팀의 기술적 완성도를 높이는 실천파'
+            },
+            { 
+                id: 3, name: '강수연', emoji: '👧', 
+                photo: 'https://img.freepik.com/free-vector/flat-style-young-woman-avatar-collection_23-2148906326.jpg',
+                studentId: '25학번', age: 22, dept: '바이오메디컬공학부', mbti: 'ISFP', 
+                appeal: '창의적인 아이디어와 유연한 사고로 새로운 가능성을 제시하는 혁신가'
+            },
+            { 
+                id: 4, name: '서채린', emoji: '👧', 
+                photo: 'https://img.freepik.com/free-vector/woman-avatar-illustration_23-2148911634.jpg',
+                studentId: '26학번', age: 21, dept: '바이오메디컬공학부', mbti: 'ISTP', 
+                appeal: '논리적인 분석과 정교한 기획으로 팀의 방향을 정립하는 전략가'
+            },
+            { 
+                id: 5, name: '박태헌', emoji: '👦', 
+                photo: 'https://img.freepik.com/free-vector/man-avatar-illustration_23-2148911633.jpg',
+                studentId: '26학번', age: 20, dept: '바이오메디컬공학부', mbti: 'ENTP', 
+                appeal: '다양한 시각과 열린 소통으로 팀의 시너지를 극대화하는 협력자'
+            }
+        ];
+
+        const grid = document.getElementById('grid');
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const topBtn = document.getElementById('topBtn');
+
+        team.forEach(m => {
+            // Team Card
+            const card = document.createElement('div');
+            card.className = 'member-card';
+            card.onclick = () => openModal(m, false); 
+            card.innerHTML = `
+                <div class="avatar-wrapper">${m.emoji}</div>
+                <h3 class="member-name">${m.name}</h3>
+                <p class="member-appeal">"${m.appeal}"</p>
+            `;
+            grid.appendChild(card);
+
+            // Slider Photo
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            slide.onclick = () => openModal(m, true); 
+            const img = document.createElement('img');
+            img.src = m.photo;
+            img.alt = `${m.name} 사진`;
+            img.onerror = function() {
+                this.src = `https://via.placeholder.com/600x400/f1f5f9/64748b?text=${m.name}`;
+            };
+            slide.appendChild(img);
+            sliderWrapper.appendChild(slide);
+        });
+
+        // Slider logic
+        let currentIdx = 0;
+        const totalSlides = team.length;
+        const updateSlider = () => {
+            sliderWrapper.style.transform = `translateX(-${currentIdx * 100}%)`;
+        };
+
+        const nextSlide = () => {
+            currentIdx = (currentIdx + 1) % totalSlides;
+            updateSlider();
+        };
+
+        const prevSlide = () => {
+            currentIdx = (currentIdx - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        };
+
+        document.getElementById('nextSlide').onclick = nextSlide;
+        document.getElementById('prevSlide').onclick = prevSlide;
+
+        let autoSlide = setInterval(nextSlide, 5000);
+        const resetInterval = () => {
+            clearInterval(autoSlide);
+            autoSlide = setInterval(nextSlide, 5000);
+        };
+        
+        document.getElementById('nextSlide').addEventListener('click', resetInterval);
+        document.getElementById('prevSlide').addEventListener('click', resetInterval);
+
+        window.onscroll = () => {
+            if (window.scrollY > 300) topBtn.classList.add('visible');
+            else topBtn.classList.remove('visible');
+        };
+
+        function openModal(m, viewerOnly = false) {
+            const modal = document.getElementById('modal');
+            const modalCard = document.getElementById('modal-card');
+            const img = document.getElementById('m-photo');
+            
+            img.src = m.photo;
+            img.onerror = function() { this.src = 'https://via.placeholder.com/200?text=No+Photo'; };
+            
+            document.getElementById('m-name').innerText = m.name;
+            
+            if (viewerOnly) {
+                modalCard.classList.add('viewer-mode');
+            } else {
+                modalCard.classList.remove('viewer-mode');
+                document.getElementById('i-name').innerText = m.name;
+                document.getElementById('i-id').innerText = m.studentId;
+                document.getElementById('i-age').innerText = m.age + '세';
+                document.getElementById('i-dept').innerText = m.dept;
+                document.getElementById('i-mbti').innerText = m.mbti;
+            }
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() { 
+            document.getElementById('modal').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+        
+        document.getElementById('modal').addEventListener('click', (e) => { 
+            if (e.target.id === 'modal') closeModal(); 
+        });
+    </script>
+</body>
+</html>
